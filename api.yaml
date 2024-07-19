@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: Books API
+  description: API for managing books
+  version: 1.0.0
+paths:
+  /books:
+    get:
+      summary: Get all books
+      responses:
+        '200':
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                      description: Book ID
+                    title:
+                      type: string
+                      example: Harry Potter and the Philosopher's Stone
+                      description: Book title
+                    author:
+                      type: string
+                      example: J.K. Rowling
+                      description: Author's name
+    post:
+      summary: Create a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: The Hobbit
+                  description: Book title
+                author:
+                  type: string
+                  example: J.R.R. Tolkien
+                  description: Author's name
+      responses:
+        '201':
+          description: Book created successfully
+        '400':
+          description: Invalid input, e.g., missing required fields
+
+  /books/{bookId}:
+    parameters:
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Get book by ID
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: Book ID
+                  title:
+                    type: string
+                    example: Harry Potter and the Philosopher's Stone
+                    description: Book title
+                  author:
+                    type: string
+                    example: J.K. Rowling
+                    description: Author's name
+        '404':
+          description: Book not found
+    put:
+      summary: Update book by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Book title
+                author:
+                  type: string
+                  description: Author's name
+      responses:
+        '200':
+          description: Book updated successfully
+        '400':
+          description: Invalid input, e.g., missing required fields
+        '404':
+          description: Book not found
+    delete:
+      summary: Delete book by ID
+      responses:
+        '204':
+          description: Book deleted successfully
+        '404':
+          description: Book not found
